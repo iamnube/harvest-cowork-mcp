@@ -1,0 +1,9 @@
+{
+  "name": "harvest",
+  "display_name": "Harvest Time Tracking",
+  "version": "1.0.0",
+  "description": "Track time, manage timers, and analyze project hours in Harvest. Includes skills for timesheet best practices and slash commands for common workflows.",
+  "author": {
+    "name": "Mikko Kam"
+  }
+}

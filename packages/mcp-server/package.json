@@ -1,0 +1,20 @@
+{
+  "name": "@harvest-mcp/server",
+  "version": "1.0.0",
+  "description": "MCP server for Harvest time tracking API",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && npx esbuild dist/index.js --bundle --platform=node --format=esm --outfile=dist/index.mjs",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.27.3",
+    "typescript": "^5.7.0"
+  }
+}

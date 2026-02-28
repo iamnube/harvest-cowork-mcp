@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter @harvest-mcp/server build",
+    "validate": "npx @anthropic-ai/mcpb validate packages/mcp-server/manifest.json",
+    "pack:mcpb": "pnpm build && npx @anthropic-ai/mcpb pack packages/mcp-server harvest-mcp.mcpb"
+  }
+}
