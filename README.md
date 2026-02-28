@@ -1,138 +1,109 @@
-# Harvest MCP
+# Harvest MCP Server
 
-A pnpm monorepo with two packages for Harvest time tracking integration with Claude:
+**The most complete Harvest integration for Claude.** 54 tools covering the full Harvest API — time entries, projects, tasks, clients, expenses, team assignments, and reports.
 
-1. **`mcp-server`** — TypeScript MCP server + Claude Desktop Extension (`.mcpb`)
-2. **`plugin`** — Claude Cowork plugin with skills and slash commands
+Works with **Claude Desktop Extension** (one-click install, no config files) and **Claude Code**.
 
-## What it does
+> Built with [Claude Cowork](https://claude.ai/cowork) + [Claude Code Extension](https://marketplace.visualstudio.com/items?itemName=anthropics.claude-code) — from zero to 54 tools without editing a single JSON config by hand.
 
-Lets Claude interact with your Harvest account — create and edit time entries, manage timers, browse projects and tasks. The MCP server provides the tools, the Cowork plugin adds domain knowledge and guided workflows on top.
+---
 
-## Packages
+## For Users
 
-### `packages/mcp-server` — MCP Server
+### Quick Install (Claude Desktop Extension)
 
-STDIO MCP server built with TypeScript. Also packaged as a `.mcpb` Claude Desktop Extension for one-click install.
+1. **Get your Harvest credentials** — go to [id.getharvest.com/developers](https://id.getharvest.com/developers), click "Create New Personal Access Token", and note your **Access Token** and **Account ID**
+2. **Download** `harvest-mcp.mcpb` from the [latest release](https://github.com/mikkokam/harvest-cowork-mcp/releases/latest)
+3. **Double-click** the `.mcpb` file (or drag it into Claude Desktop settings)
+4. **Enter your credentials** when prompted — they're stored securely in your OS keychain
 
-#### Tools (14)
+That's it. No terminal, no JSON files, no build steps.
 
-**Time Entries** (primary use case):
-`list_time_entries` · `get_time_entry` · `create_time_entry` · `update_time_entry` · `delete_time_entry` · `restart_timer` · `stop_timer`
+### What You Can Do
 
-**Projects & Tasks**:
-`list_projects` · `get_project` · `list_project_task_assignments`
+**Track Time** — create, update, and delete time entries. Start and stop timers. Log hours manually or with start/end times.
 
-**Users & Clients**:
-`get_me` · `list_users` · `list_tasks` · `list_clients`
+**Manage Projects** — create projects, assign users, set budgets, configure billing. Full CRUD on projects, tasks, and clients.
 
-#### Prompts (3)
+**Track Expenses** — log expenses by category, manage expense categories with unit-based pricing (e.g. mileage).
 
-| Prompt | Description |
+**Get Reports** — time reports by client/project/task/team, expense reports, project budget reports, uninvoiced amounts.
+
+**Team Management** — assign users to projects, manage roles and rates, view project assignments.
+
+### All 54 Tools
+
+| Area | Tools |
+|------|-------|
+| **Time Entries** | `list_time_entries` `get_time_entry` `create_time_entry` `update_time_entry` `delete_time_entry` `restart_timer` `stop_timer` |
+| **Projects** | `list_projects` `get_project` `create_project` `update_project` `delete_project` `list_project_task_assignments` |
+| **Tasks** | `list_tasks` `get_task` `create_task` `update_task` `delete_task` |
+| **Clients** | `list_clients` `get_client` `create_client` `update_client` `delete_client` |
+| **Users** | `get_me` `get_user` `list_users` `list_my_project_assignments` `list_user_project_assignments` |
+| **Expenses** | `list_expenses` `get_expense` `create_expense` `update_expense` `delete_expense` |
+| **Expense Categories** | `list_expense_categories` `get_expense_category` `create_expense_category` `update_expense_category` `delete_expense_category` |
+| **Project User Assignments** | `list_all_user_assignments` `list_project_user_assignments` `get_project_user_assignment` `create_project_user_assignment` `update_project_user_assignment` `delete_project_user_assignment` |
+| **Time Reports** | `time_report_by_clients` `time_report_by_projects` `time_report_by_tasks` `time_report_by_team` |
+| **Expense Reports** | `expense_report_by_clients` `expense_report_by_projects` `expense_report_by_categories` `expense_report_by_team` |
+| **Other Reports** | `project_budget_report` `uninvoiced_report` |
+
+### Guided Prompts
+
+| Prompt | What it does |
 |--------|-------------|
-| `log-time` | Guided time entry creation — walks through project, task, hours, notes |
-| `weekly-summary` | Summarize the week's time entries by project/client |
-| `timer` | Start, stop, or check status of running timers |
+| `log-time` | Walks you through picking a project, task, hours, and notes |
+| `weekly-summary` | Summarizes the week's entries by project/client with gap detection |
+| `timer` | Quick start/stop/status for running timers |
 
-### `packages/plugin` — Cowork Plugin
+### Getting Your Harvest API Credentials
 
-File-based plugin (markdown + JSON, no code) that layers domain knowledge and slash commands on top of the MCP server.
+1. Go to [id.getharvest.com/developers](https://id.getharvest.com/developers)
+2. Sign in with your Harvest account
+3. Click **"Create New Personal Access Token"**
+4. Give it a name (e.g. "Claude")
+5. Copy the **Token** and note your **Account ID** (shown on the same page)
 
-#### Skills (auto-activated)
-- **timesheet-management** — When/how to log time, timer vs. manual entry, rounding
-- **project-time-analysis** — Budget tracking, over/under allocation, reporting
-- **harvest-conventions** — API patterns, date formats, entity relationships
+---
 
-#### Commands (user-triggered)
-- `/harvest:log-time` — Interactive time entry creation
-- `/harvest:weekly-report` — Weekly time summary with gap detection
-- `/harvest:timer` — Quick timer start/stop/status
-- `/harvest:unsubmitted` — Review entries pending approval
+## For Developers
 
-## Tech Stack
+### Prerequisites
 
-- **pnpm** workspaces monorepo
-- **TypeScript** with Node.js
-- **[@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/typescript-sdk)** ^1.27 — official MCP TypeScript SDK
-- **STDIO transport** — runs as a subprocess
-- **[@anthropic-ai/mcpb](https://github.com/anthropics/mcpb)** — Desktop Extension packaging
-- **[Zod](https://zod.dev/)** — tool input schema validation
+- Node.js 18+
+- [pnpm](https://pnpm.io/)
 
-## Project Structure
+### Setup
 
-```
-harvest-mcp/
-├── pnpm-workspace.yaml
-├── package.json                # Root workspace config
-├── tsconfig.base.json
-├── packages/
-│   ├── mcp-server/
-│   │   ├── src/
-│   │   │   ├── index.ts              # McpServer + StdioServerTransport
-│   │   │   ├── harvest-client.ts     # Harvest API v2 HTTP client
-│   │   │   ├── types.ts              # Harvest API types
-│   │   │   ├── tools/
-│   │   │   │   ├── time-entries.ts
-│   │   │   │   ├── projects.ts
-│   │   │   │   └── users.ts
-│   │   │   └── prompts/
-│   │   │       ├── log-time.ts
-│   │   │       ├── weekly-summary.ts
-│   │   │       └── timer.ts
-│   │   ├── manifest.json             # .mcpb extension manifest
-│   │   ├── package.json
-│   │   └── tsconfig.json
-│   └── plugin/
-│       ├── .claude-plugin/
-│       │   └── plugin.json
-│       ├── .mcp.json
-│       ├── skills/
-│       │   ├── timesheet-management/SKILL.md
-│       │   ├── project-time-analysis/SKILL.md
-│       │   └── harvest-conventions/SKILL.md
-│       └── commands/
-│           ├── log-time.md
-│           ├── weekly-report.md
-│           ├── timer.md
-│           └── unsubmitted.md
-├── README.md
-└── plan.md
-```
-
-## Authentication
-
-Uses Harvest [Personal Access Tokens](https://help.getharvest.com/api-v2/authentication-api/authentication/authentication/):
-
-- **Access Token** — from [Harvest Developer Tools](https://id.getharvest.com/developers)
-- **Account ID** — your Harvest account identifier
-
-In the `.mcpb` extension, these are declared as sensitive `user_config` fields stored in the OS keychain. For development, set environment variables `HARVEST_ACCESS_TOKEN` and `HARVEST_ACCOUNT_ID`.
-
-## Installation
-
-### Claude Desktop Extension (recommended)
-1. Download `harvest-mcp.mcpb` from releases
-2. Double-click or drag into Claude Desktop settings
-3. Enter your Harvest credentials when prompted
-
-### Cowork Plugin
 ```bash
-claude plugin install harvest@harvest-mcp
-```
-
-### Manual / Development
-```bash
+git clone https://github.com/mikkokam/harvest-cowork-mcp.git
+cd harvest-cowork-mcp
 pnpm install
-pnpm build
-
-# Add to Claude Desktop config:
 ```
+
+### Build
+
+```bash
+pnpm build                    # Compile TypeScript + bundle with esbuild
+pnpm validate                 # Validate the .mcpb manifest
+pnpm pack:mcpb                # Build + package as .mcpb extension
+```
+
+### Run Locally (for development)
+
+```bash
+export HARVEST_ACCESS_TOKEN="your-token"
+export HARVEST_ACCOUNT_ID="your-account-id"
+node packages/mcp-server/dist/index.mjs
+```
+
+Or add to Claude Desktop / Claude Code config manually:
+
 ```json
 {
   "mcpServers": {
     "harvest": {
       "command": "node",
-      "args": ["/path/to/harvest-mcp/packages/mcp-server/dist/index.js"],
+      "args": ["/absolute/path/to/harvest-cowork-mcp/packages/mcp-server/dist/index.mjs"],
       "env": {
         "HARVEST_ACCESS_TOKEN": "your-token",
         "HARVEST_ACCOUNT_ID": "your-account-id"
@@ -142,42 +113,75 @@ pnpm build
 }
 ```
 
-## Development
+### Project Structure
 
-```bash
-pnpm install
-pnpm build                    # Build MCP server
-pnpm validate                 # Validate .mcpb manifest
-pnpm pack:mcpb                # Package as .mcpb extension
+```
+harvest-cowork-mcp/
+├── packages/
+│   ├── mcp-server/
+│   │   ├── src/
+│   │   │   ├── index.ts              # Server entry point
+│   │   │   ├── harvest-client.ts     # Harvest API v2 HTTP client
+│   │   │   ├── types.ts              # TypeScript types for all API entities
+│   │   │   ├── tools/
+│   │   │   │   ├── time-entries.ts    # 7 tools
+│   │   │   │   ├── projects.ts       # 6 tools
+│   │   │   │   ├── tasks.ts          # 5 tools
+│   │   │   │   ├── clients.ts        # 5 tools
+│   │   │   │   ├── users.ts          # 5 tools
+│   │   │   │   ├── expenses.ts       # 5 tools
+│   │   │   │   ├── expense-categories.ts  # 5 tools
+│   │   │   │   ├── project-user-assignments.ts  # 6 tools
+│   │   │   │   └── reports.ts        # 10 tools
+│   │   │   └── prompts/
+│   │   │       ├── log-time.ts
+│   │   │       ├── weekly-summary.ts
+│   │   │       └── timer.ts
+│   │   ├── manifest.json             # .mcpb extension manifest
+│   │   ├── package.json
+│   │   └── tsconfig.json
+│   └── plugin/                       # Claude Cowork plugin (skills + commands)
+├── package.json                      # Workspace root
+├── pnpm-workspace.yaml
+└── .gitignore
 ```
 
-## Harvest API Reference
+### Adding New Endpoints
 
-Built on [Harvest API v2](https://help.getharvest.com/api-v2/). Key endpoints:
+The pattern is consistent across all tools:
 
-| Endpoint | Methods |
-|----------|---------|
-| `/v2/time_entries` | GET, POST |
-| `/v2/time_entries/{id}` | GET, PATCH, DELETE |
-| `/v2/time_entries/{id}/restart` | PATCH |
-| `/v2/time_entries/{id}/stop` | PATCH |
-| `/v2/projects` | GET |
-| `/v2/projects/{id}` | GET |
-| `/v2/projects/{id}/task_assignments` | GET |
-| `/v2/tasks` | GET |
-| `/v2/users` | GET |
-| `/v2/users/me` | GET |
-| `/v2/clients` | GET |
+1. **Add types** in `types.ts` (entity interface, create/update params, list params)
+2. **Add client methods** in `harvest-client.ts`
+3. **Create tool file** in `tools/` with `registerXTools()` function
+4. **Register** in `index.ts`
+5. **Update manifest** in `manifest.json` (tool name + description)
+6. **Build** with `pnpm build`
 
-## References
+### Tech Stack
 
-- [MCP Spec 2025-11-25](https://modelcontextprotocol.io/specification/2025-11-25)
-- [MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
-- [MCPB Manifest Spec](https://github.com/anthropics/mcpb/blob/main/MANIFEST.md)
-- [Claude Desktop Extensions](https://www.anthropic.com/engineering/desktop-extensions)
-- [Knowledge Work Plugins](https://github.com/anthropics/knowledge-work-plugins)
-- [Agent Skills](https://github.com/anthropics/skills)
-- [taiste/harvest-mcp-server](https://github.com/taiste/harvest-mcp-server) (Python reference)
+- **[MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)** ^1.27
+- **[Zod](https://zod.dev/)** for tool input schema validation
+- **esbuild** for single-file bundling
+- **[@anthropic-ai/mcpb](https://github.com/anthropics/mcpb)** for Desktop Extension packaging
+- **STDIO transport** — runs as a subprocess of Claude
+
+### Harvest API Reference
+
+Built on [Harvest API v2](https://help.getharvest.com/api-v2/). Covers:
+
+- [Time Entries](https://help.getharvest.com/api-v2/timesheets-api/timesheets/time-entries/)
+- [Projects](https://help.getharvest.com/api-v2/projects-api/projects/projects/) + [Task Assignments](https://help.getharvest.com/api-v2/projects-api/projects/task-assignments/) + [User Assignments](https://help.getharvest.com/api-v2/projects-api/projects/user-assignments/)
+- [Tasks](https://help.getharvest.com/api-v2/tasks-api/tasks/tasks/)
+- [Clients](https://help.getharvest.com/api-v2/clients-api/clients/clients/)
+- [Users](https://help.getharvest.com/api-v2/users-api/users/users/) + [Project Assignments](https://help.getharvest.com/api-v2/users-api/users/project-assignments/)
+- [Expenses](https://help.getharvest.com/api-v2/expenses-api/expenses/expenses/) + [Categories](https://help.getharvest.com/api-v2/expenses-api/expenses/expense-categories/)
+- [Time Reports](https://help.getharvest.com/api-v2/reports-api/reports/time-reports/) + [Expense Reports](https://help.getharvest.com/api-v2/reports-api/reports/expense-reports/) + [Project Budget](https://help.getharvest.com/api-v2/reports-api/reports/project-budget-report/) + [Uninvoiced](https://help.getharvest.com/api-v2/reports-api/reports/uninvoiced-report/)
+
+---
+
+## How This Was Built
+
+This entire MCP server — 54 tools, types, client, manifest, packaging — was built in a single session using **Claude Cowork** with the **Claude Code VS Code Extension**. Claude read the Harvest API docs, wrote all the code, validated the manifest, built the `.mcpb`, and pushed to GitHub. No config files were edited by hand.
 
 ## License
 
