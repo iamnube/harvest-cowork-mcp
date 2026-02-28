@@ -21,8 +21,10 @@ That's it. No terminal, no JSON files, no build steps.
 
 1. **Get your Harvest credentials** (same as above)
 2. **Download** `harvest-plugin.zip` from the [latest release](https://github.com/mikkokam/harvest-cowork-mcp/releases/latest)
-3. **Unzip** into your project directory — the `.claude-plugin` folder should be at the project root
-4. **Configure** `.mcp.json` with your credentials (or set `HARVEST_ACCESS_TOKEN` and `HARVEST_ACCOUNT_ID` as environment variables)
+3. In Claude Desktop, switch to the **Cowork** tab
+4. Click **Customize** in the left sidebar
+5. Click **Browse plugins**, then upload the `harvest-plugin.zip` file
+6. **Enter your credentials** when prompted
 
 The plugin adds slash commands (`/log-time`, `/timer`, `/weekly-report`, `/catchup`, `/unsubmitted`) and skills for time management, project analysis, and context-aware Harvest conventions.
 
