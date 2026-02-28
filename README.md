@@ -1,10 +1,8 @@
 # Harvest MCP Server
 
-**The most complete Harvest integration for Claude.** 54 tools covering the full Harvest API — time entries, projects, tasks, clients, expenses, team assignments, and reports.
+**The most complete [Harvest](https://www.getharvest.com/) integration for Claude.** 54 tools covering the full [Harvest API v2](https://help.getharvest.com/api-v2/) — time entries, projects, tasks, clients, expenses, team assignments, and reports.
 
-Works with **Claude Desktop Extension** (one-click install, no config files) and **Claude Code**.
-
-> Built with [Claude Cowork](https://claude.ai/cowork) + [Claude Code Extension](https://marketplace.visualstudio.com/items?itemName=anthropics.claude-code) — from zero to 54 tools without editing a single JSON config by hand.
+Works with **Claude Desktop Extension** (one-click install, no config files), **Claude Cowork Plugin** (skills + slash commands), and **Claude Code**.
 
 ---
 
@@ -18,6 +16,15 @@ Works with **Claude Desktop Extension** (one-click install, no config files) and
 4. **Enter your credentials** when prompted — they're stored securely in your OS keychain
 
 That's it. No terminal, no JSON files, no build steps.
+
+### Install (Claude Cowork Plugin)
+
+1. **Get your Harvest credentials** (same as above)
+2. **Download** `harvest-plugin.zip` from the [latest release](https://github.com/mikkokam/harvest-cowork-mcp/releases/latest)
+3. **Unzip** into your project directory — the `.claude-plugin` folder should be at the project root
+4. **Configure** `.mcp.json` with your credentials (or set `HARVEST_ACCESS_TOKEN` and `HARVEST_ACCOUNT_ID` as environment variables)
+
+The plugin adds slash commands (`/log-time`, `/timer`, `/weekly-report`, `/catchup`, `/unsubmitted`) and skills for time management, project analysis, and context-aware Harvest conventions.
 
 ### What You Can Do
 
