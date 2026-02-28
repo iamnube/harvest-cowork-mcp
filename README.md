@@ -1,8 +1,10 @@
 # Harvest MCP Server
 
+## Time tracking using Claude.
+
 **The most complete [Harvest](https://www.getharvest.com/) integration for Claude.** 54 tools covering the full [Harvest API v2](https://help.getharvest.com/api-v2/) — time entries, projects, tasks, clients, expenses, team assignments, and reports.
 
-Built in **TypeScript** (not Python like most MCP servers), bundled into a single file — no runtime dependencies to install.
+Built in **TypeScript** (not Python like most MCP servers for Harvest time tracking), bundled into a single file — no runtime dependencies to install.
 
 Works with **Claude Desktop Extension** (one-click install, no config files), **Claude Cowork Plugin** (skills + slash commands), and **Claude Code**.
 
