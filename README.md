@@ -2,22 +2,26 @@
 
 **The most complete [Harvest](https://www.getharvest.com/) integration for Claude.** 54 tools covering the full [Harvest API v2](https://help.getharvest.com/api-v2/) — time entries, projects, tasks, clients, expenses, team assignments, and reports.
 
+Built in **TypeScript** (not Python like most MCP servers), bundled into a single file — no runtime dependencies to install.
+
 Works with **Claude Desktop Extension** (one-click install, no config files), **Claude Cowork Plugin** (skills + slash commands), and **Claude Code**.
 
 ---
 
 ## For Users
 
-### Quick Install (Claude Desktop Extension)
+### Quick Install (Claude Desktop Extension) — recommended
 
 1. **Get your Harvest credentials** — go to [id.getharvest.com/developers](https://id.getharvest.com/developers), click "Create New Personal Access Token", and note your **Access Token** and **Account ID**
 2. **Download** `harvest-mcp.mcpb` from the [latest release](https://github.com/mikkokam/harvest-cowork-mcp/releases/latest)
 3. **Double-click** the `.mcpb` file (or drag it into Claude Desktop settings)
 4. **Enter your credentials** when prompted — they're stored securely in your OS keychain
 
-That's it. No terminal, no JSON files, no build steps.
+That's it. No terminal, no JSON files, no build steps. The extension installs the MCP server locally and handles everything — much simpler than servers that require manually editing JSON config files.
 
-### Install (Claude Cowork Plugin)
+This is all you need to get started. The Cowork plugin below is optional but recommended.
+
+### Install (Claude Cowork Plugin) — optional
 
 1. **Get your Harvest credentials** (same as above)
 2. **Download** `harvest-plugin.zip` from the [latest release](https://github.com/mikkokam/harvest-cowork-mcp/releases/latest)
