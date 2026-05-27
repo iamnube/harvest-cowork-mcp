@@ -84,23 +84,4 @@ export function registerTaskTools(server: McpServer, client: HarvestClient) {
     },
   );
 
-  server.registerTool(
-    "delete_task",
-    {
-      title: "Delete Task",
-      description: "Delete a task. Only possible if it has no time entries. This is destructive and cannot be undone.",
-      annotations: {
-        destructiveHint: true,
-      },
-      inputSchema: z.object({
-        task_id: z.number().describe("The task ID to delete"),
-      }),
-    },
-    async (args) => {
-      await client.deleteTask(args.task_id);
-      return {
-        content: [{ type: "text" as const, text: `Task ${args.task_id} deleted successfully.` }],
-      };
-    },
-  );
 }

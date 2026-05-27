@@ -113,24 +113,4 @@ export function registerProjectUserAssignmentTools(server: McpServer, client: Ha
     },
   );
 
-  server.registerTool(
-    "delete_project_user_assignment",
-    {
-      title: "Remove User from Project",
-      description: "Remove a user's assignment from a project. This is a destructive action and cannot be undone.",
-      annotations: {
-        destructiveHint: true,
-      },
-      inputSchema: z.object({
-        project_id: z.number().describe("The project ID"),
-        user_assignment_id: z.number().describe("The user assignment ID to delete"),
-      }),
-    },
-    async (args) => {
-      await client.deleteProjectUserAssignment(args.project_id, args.user_assignment_id);
-      return {
-        content: [{ type: "text" as const, text: `User assignment ${args.user_assignment_id} removed from project ${args.project_id} successfully.` }],
-      };
-    },
-  );
 }

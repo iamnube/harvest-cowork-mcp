@@ -81,24 +81,4 @@ export function registerClientTools(server: McpServer, client: HarvestClient) {
     },
   );
 
-  server.registerTool(
-    "delete_client",
-    {
-      title: "Delete Client",
-      description:
-        "Delete a client. Only possible if the client has no projects, invoices, or estimates. This is destructive and cannot be undone.",
-      annotations: {
-        destructiveHint: true,
-      },
-      inputSchema: z.object({
-        client_id: z.number().describe("The client ID to delete"),
-      }),
-    },
-    async (args) => {
-      await client.deleteClient(args.client_id);
-      return {
-        content: [{ type: "text" as const, text: `Client ${args.client_id} deleted successfully.` }],
-      };
-    },
-  );
 }

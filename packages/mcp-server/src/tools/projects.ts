@@ -115,26 +115,6 @@ export function registerProjectTools(server: McpServer, client: HarvestClient) {
   );
 
   server.registerTool(
-    "delete_project",
-    {
-      title: "Delete Project",
-      description: "Delete a project. This is a destructive action and cannot be undone.",
-      annotations: {
-        destructiveHint: true,
-      },
-      inputSchema: z.object({
-        project_id: z.number().describe("The project ID to delete"),
-      }),
-    },
-    async (args) => {
-      await client.deleteProject(args.project_id);
-      return {
-        content: [{ type: "text" as const, text: `Project ${args.project_id} deleted successfully.` }],
-      };
-    },
-  );
-
-  server.registerTool(
     "list_project_task_assignments",
     {
       title: "List Project Task Assignments",

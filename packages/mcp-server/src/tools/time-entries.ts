@@ -105,26 +105,6 @@ export function registerTimeEntryTools(server: McpServer, client: HarvestClient)
   );
 
   server.registerTool(
-    "delete_time_entry",
-    {
-      title: "Delete Time Entry",
-      description: "Permanently delete a time entry. This cannot be undone.",
-      inputSchema: z.object({
-        time_entry_id: z.number().describe("The time entry ID to delete"),
-      }),
-      annotations: {
-        destructiveHint: true,
-      },
-    },
-    async (args) => {
-      await client.deleteTimeEntry(args.time_entry_id);
-      return {
-        content: [{ type: "text" as const, text: `Time entry ${args.time_entry_id} deleted.` }],
-      };
-    },
-  );
-
-  server.registerTool(
     "restart_timer",
     {
       title: "Restart Timer",

@@ -1,9 +1,9 @@
 {
   "manifest_version": "0.3",
   "name": "harvest-mcp",
-  "display_name": "Harvest Time Tracking",
-  "version": "1.0.0",
-  "description": "Full Harvest API — time entries, projects, tasks, clients, expenses, team assignments, and reports",
+  "display_name": "Harvest Time Tracking (IAMNUBE)",
+  "version": "1.1.0",
+  "description": "Harvest API integration — time entries, projects, tasks, clients, expenses, team assignments, and reports. Delete operations disabled for safety.",
   "author": {
     "name": "Mikko Kämäräinen"
   },
@@ -49,7 +49,6 @@
     { "name": "get_time_entry", "description": "Get a specific time entry by ID" },
     { "name": "create_time_entry", "description": "Create a new time entry or start a timer" },
     { "name": "update_time_entry", "description": "Update an existing time entry" },
-    { "name": "delete_time_entry", "description": "Delete a time entry" },
     { "name": "restart_timer", "description": "Restart a stopped timer" },
     { "name": "stop_timer", "description": "Stop a running timer" },
 
@@ -57,21 +56,16 @@
     { "name": "get_project", "description": "Get project details" },
     { "name": "create_project", "description": "Create a new project" },
     { "name": "update_project", "description": "Update an existing project" },
-    { "name": "delete_project", "description": "Delete a project" },
     { "name": "list_project_task_assignments", "description": "List tasks assigned to a project" },
 
     { "name": "list_tasks", "description": "List available tasks (activity types)" },
     { "name": "get_task", "description": "Get a specific task by ID" },
     { "name": "create_task", "description": "Create a new task" },
     { "name": "update_task", "description": "Update an existing task" },
-    { "name": "delete_task", "description": "Delete a task" },
-
     { "name": "list_clients", "description": "List clients" },
     { "name": "get_client", "description": "Get client details" },
     { "name": "create_client", "description": "Create a new client" },
     { "name": "update_client", "description": "Update an existing client" },
-    { "name": "delete_client", "description": "Delete a client" },
-
     { "name": "get_me", "description": "Get current authenticated user info" },
     { "name": "get_user", "description": "Get a specific user by ID" },
     { "name": "list_users", "description": "List users in the account" },
@@ -82,21 +76,15 @@
     { "name": "get_expense", "description": "Get a specific expense by ID" },
     { "name": "create_expense", "description": "Create a new expense" },
     { "name": "update_expense", "description": "Update an existing expense" },
-    { "name": "delete_expense", "description": "Delete an expense" },
-
     { "name": "list_expense_categories", "description": "List expense categories" },
     { "name": "get_expense_category", "description": "Get an expense category by ID" },
     { "name": "create_expense_category", "description": "Create a new expense category" },
     { "name": "update_expense_category", "description": "Update an expense category" },
-    { "name": "delete_expense_category", "description": "Delete an expense category" },
-
     { "name": "list_all_user_assignments", "description": "List all user assignments across projects" },
     { "name": "list_project_user_assignments", "description": "List user assignments for a project" },
     { "name": "get_project_user_assignment", "description": "Get a specific user assignment" },
     { "name": "create_project_user_assignment", "description": "Assign a user to a project" },
     { "name": "update_project_user_assignment", "description": "Update a user's project assignment" },
-    { "name": "delete_project_user_assignment", "description": "Remove a user from a project" },
-
     { "name": "time_report_by_clients", "description": "Time report grouped by clients" },
     { "name": "time_report_by_projects", "description": "Time report grouped by projects" },
     { "name": "time_report_by_tasks", "description": "Time report grouped by tasks" },

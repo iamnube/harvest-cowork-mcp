@@ -96,23 +96,4 @@ export function registerExpenseTools(server: McpServer, client: HarvestClient) {
     },
   );
 
-  server.registerTool(
-    "delete_expense",
-    {
-      title: "Delete Expense",
-      description: "Delete an expense. This is a destructive action and cannot be undone.",
-      annotations: {
-        destructiveHint: true,
-      },
-      inputSchema: z.object({
-        expense_id: z.number().describe("The expense ID to delete"),
-      }),
-    },
-    async (args) => {
-      await client.deleteExpense(args.expense_id);
-      return {
-        content: [{ type: "text" as const, text: `Expense ${args.expense_id} deleted successfully.` }],
-      };
-    },
-  );
 }
