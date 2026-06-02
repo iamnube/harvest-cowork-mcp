@@ -3,3 +3,4 @@ dist/
 *.mcpb
 *.zip
 plan.md
+packages/mcp-server/package-lock.json
