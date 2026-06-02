@@ -2,8 +2,8 @@
   "manifest_version": "0.3",
   "name": "harvest-mcp",
   "display_name": "Harvest Time Tracking (IAMNUBE)",
-  "version": "1.1.0",
-  "description": "Harvest API integration — time entries, projects, tasks, clients, expenses, team assignments, and reports. Delete operations disabled for safety.",
+  "version": "1.2.0",
+  "description": "Harvest API integration — time entries, projects, tasks, clients, expenses, invoices, team assignments, and reports. Delete operations disabled for safety.",
   "author": {
     "name": "Mikko Kämäräinen"
   },
@@ -94,7 +94,13 @@
     { "name": "expense_report_by_clients", "description": "Expense report grouped by clients" },
     { "name": "expense_report_by_projects", "description": "Expense report grouped by projects" },
     { "name": "expense_report_by_categories", "description": "Expense report grouped by categories" },
-    { "name": "expense_report_by_team", "description": "Expense report grouped by team members" }
+    { "name": "expense_report_by_team", "description": "Expense report grouped by team members" },
+
+    { "name": "list_invoices", "description": "List invoices, filterable by client, project, state, or date" },
+    { "name": "get_invoice", "description": "Get a specific invoice with its line items" },
+    { "name": "create_invoice", "description": "Create a new draft invoice for a client" },
+    { "name": "update_invoice", "description": "Update an existing invoice and its line items" },
+    { "name": "send_invoice", "description": "Email an invoice to recipients" }
   ],
 
   "prompts": [

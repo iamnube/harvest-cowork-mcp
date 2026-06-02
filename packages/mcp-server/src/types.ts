@@ -616,3 +616,111 @@ export interface ExpenseReportParams {
   page?: number;
   per_page?: number;
 }
+
+// --- Invoices ---
+
+export interface InvoiceLineItem {
+  id?: number;
+  project_id?: number;
+  kind: string;
+  description?: string;
+  quantity?: number;
+  unit_price: number;
+  taxed?: boolean;
+  taxed2?: boolean;
+}
+
+export interface Invoice {
+  id: number;
+  client?: { id: number; name: string };
+  number?: string;
+  purchase_order?: string;
+  amount?: number;
+  due_amount?: number;
+  subject?: string;
+  notes?: string;
+  state?: string;
+  issue_date?: string;
+  due_date?: string;
+  payment_term?: string;
+  currency?: string;
+  sent_at?: string;
+  paid_at?: string;
+  line_items?: InvoiceLineItem[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface InvoiceList {
+  invoices: Invoice[];
+  per_page: number;
+  total_pages: number;
+  total_entries: number;
+  page: number;
+}
+
+export interface ListInvoicesParams {
+  client_id?: number;
+  project_id?: number;
+  updated_since?: string;
+  from?: string;
+  to?: string;
+  state?: string;
+  page?: number;
+  per_page?: number;
+}
+
+export interface CreateInvoiceParams {
+  client_id: number;
+  retainer_id?: number;
+  estimate_id?: number;
+  number?: string;
+  purchase_order?: string;
+  tax?: number;
+  tax2?: number;
+  discount?: number;
+  subject?: string;
+  notes?: string;
+  currency?: string;
+  issue_date?: string;
+  due_date?: string;
+  payment_term?: string;
+  line_items?: InvoiceLineItem[];
+}
+
+export interface UpdateInvoiceParams {
+  client_id?: number;
+  retainer_id?: number;
+  estimate_id?: number;
+  number?: string;
+  purchase_order?: string;
+  tax?: number;
+  tax2?: number;
+  discount?: number;
+  subject?: string;
+  notes?: string;
+  currency?: string;
+  issue_date?: string;
+  due_date?: string;
+  payment_term?: string;
+  line_items?: InvoiceLineItem[];
+}
+
+export interface SendInvoiceParams {
+  invoice_id: number;
+  recipients: { name?: string; email: string }[];
+  subject?: string;
+  body?: string;
+  include_link_to_client_invoice?: boolean;
+  attach_pdf?: boolean;
+  send_me_a_copy?: boolean;
+  thank_you?: boolean;
+}
+
+export interface InvoiceMessage {
+  id: number;
+  sent_by?: string;
+  subject?: string;
+  body?: string;
+  created_at?: string;
+}

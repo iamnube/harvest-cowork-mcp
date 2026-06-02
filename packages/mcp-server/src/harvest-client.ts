@@ -51,6 +51,12 @@ import type {
   UninvoicedReportParams,
   ExpenseReportResponse,
   ExpenseReportParams,
+  Invoice,
+  InvoiceList,
+  ListInvoicesParams,
+  CreateInvoiceParams,
+  UpdateInvoiceParams,
+  InvoiceMessage,
 } from "./types.js";
 
 const BASE_URL = "https://api.harvestapp.com";
@@ -354,5 +360,27 @@ export class HarvestClient {
 
   async getExpenseReportByTeam(params: ExpenseReportParams): Promise<ExpenseReportResponse> {
     return this.request<ExpenseReportResponse>("GET", "/v2/reports/expenses/team", params as unknown as Record<string, unknown>);
+  }
+
+  // --- Invoices ---
+
+  async listInvoices(params?: ListInvoicesParams): Promise<InvoiceList> {
+    return this.request<InvoiceList>("GET", "/v2/invoices", params as Record<string, unknown>);
+  }
+
+  async getInvoice(id: number): Promise<Invoice> {
+    return this.request<Invoice>("GET", `/v2/invoices/${id}`);
+  }
+
+  async createInvoice(data: CreateInvoiceParams): Promise<Invoice> {
+    return this.request<Invoice>("POST", "/v2/invoices", undefined, data as unknown as Record<string, unknown>);
+  }
+
+  async updateInvoice(id: number, data: UpdateInvoiceParams): Promise<Invoice> {
+    return this.request<Invoice>("PATCH", `/v2/invoices/${id}`, undefined, data as unknown as Record<string, unknown>);
+  }
+
+  async sendInvoice(id: number, data: Record<string, unknown>): Promise<InvoiceMessage> {
+    return this.request<InvoiceMessage>("POST", `/v2/invoices/${id}/messages`, undefined, data);
   }
 }

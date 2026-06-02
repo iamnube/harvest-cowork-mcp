@@ -12,6 +12,7 @@ import { registerReportTools } from "./tools/reports.js";
 import { registerExpenseTools } from "./tools/expenses.js";
 import { registerExpenseCategoryTools } from "./tools/expense-categories.js";
 import { registerProjectUserAssignmentTools } from "./tools/project-user-assignments.js";
+import { registerInvoiceTools } from "./tools/invoices.js";
 import { registerLogTimePrompt } from "./prompts/log-time.js";
 import { registerWeeklySummaryPrompt } from "./prompts/weekly-summary.js";
 import { registerTimerPrompt } from "./prompts/timer.js";
@@ -30,7 +31,7 @@ const client = new HarvestClient(accessToken, accountId);
 
 const server = new McpServer({
   name: "harvest",
-  version: "1.0.0",
+  version: "1.2.0",
 });
 
 registerTimeEntryTools(server, client);
@@ -42,6 +43,7 @@ registerReportTools(server, client);
 registerExpenseTools(server, client);
 registerExpenseCategoryTools(server, client);
 registerProjectUserAssignmentTools(server, client);
+registerInvoiceTools(server, client);
 
 registerLogTimePrompt(server);
 registerWeeklySummaryPrompt(server);
