@@ -724,3 +724,40 @@ export interface InvoiceMessage {
   body?: string;
   created_at?: string;
 }
+
+// --- Invoice Payments ---
+
+export interface InvoicePayment {
+  id: number;
+  amount?: number;
+  paid_at?: string;
+  paid_date?: string;
+  recorded_by?: string;
+  recorded_by_email?: string;
+  notes?: string;
+  transaction_id?: string | null;
+  created_at?: string;
+  updated_at?: string;
+  payment_gateway?: { id: number | null; name: string | null } | null;
+}
+
+export interface InvoicePaymentList {
+  invoice_payments: InvoicePayment[];
+  per_page: number;
+  total_pages: number;
+  total_entries: number;
+  page: number;
+}
+
+export interface ListInvoicePaymentsParams {
+  updated_since?: string;
+  page?: number;
+  per_page?: number;
+}
+
+export interface CreateInvoicePaymentParams {
+  amount: number;
+  paid_at?: string;
+  paid_date?: string;
+  notes?: string;
+}

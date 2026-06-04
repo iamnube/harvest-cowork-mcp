@@ -162,4 +162,51 @@ export function registerInvoiceTools(server: McpServer, client: HarvestClient) {
       };
     },
   );
+
+  server.registerTool(
+    "list_invoice_payments",
+    {
+      title: "List Invoice Payments",
+      description: "List all payments recorded against a specific invoice, most recent first.",
+      inputSchema: z.object({
+        invoice_id: z.number().describe("The invoice ID to list payments for"),
+        updated_since: z.string().optional().describe("Only return payments updated since this datetime"),
+        page: z.number().optional().describe("Page number for pagination"),
+        per_page: z.number().optional().describe("Results per page (max 2000)"),
+      }),
+    },
+    async (args) => {
+      const { invoice_id, ...params } = args;
+      const result = await client.listInvoicePayments(invoice_id, params);
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+      };
+    },
+  );
+
+  server.registerTool(
+    "record_invoice_payment",
+    {
+      title: "Record Invoice Payment",
+      description:
+        "Record a payment received against an invoice (for example, a client check or bank transfer). This updates the invoice's outstanding balance and marks it paid when nothing is left due. This only updates your Harvest bookkeeping — it does not move any money or charge the client.",
+      annotations: {
+        destructiveHint: true,
+      },
+      inputSchema: z.object({
+        invoice_id: z.number().describe("The invoice ID the payment is for"),
+        amount: z.number().describe("The amount received"),
+        paid_at: z.string().optional().describe("Date/time the payment was made (ISO 8601, e.g. 2026-05-28T00:00:00Z)"),
+        paid_date: z.string().optional().describe("Date the payment was made (YYYY-MM-DD). Use this or paid_at."),
+        notes: z.string().optional().describe("Notes about the payment, e.g. 'Paid via check #4321'"),
+      }),
+    },
+    async (args) => {
+      const { invoice_id, ...data } = args;
+      const result = await client.createInvoicePayment(invoice_id, data);
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+      };
+    },
+  );
 }

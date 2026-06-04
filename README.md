@@ -17,7 +17,9 @@ This makes the server safe for deployment to client teams without risk of accide
 
 **Invoice support added (v1.2.0):** full invoice management — list, get, create, update, and send — minus delete, consistent with the fork's safety policy.
 
-## Available Tools (52)
+**Invoice & payment support added (v1.3.0):** full invoice management — list, get, create, update, send — plus payment recording (list and record received payments), all minus delete, consistent with the fork's safety policy.
+
+## Available Tools (54)
 
 | Area | Tools |
 |---|---|
@@ -26,6 +28,7 @@ This makes the server safe for deployment to client teams without risk of accide
 | **Tasks** | `list_tasks` `get_task` `create_task` `update_task` |
 | **Clients** | `list_clients` `get_client` `create_client` `update_client` |
 | **Invoices** | `list_invoices` `get_invoice` `create_invoice` `update_invoice` `send_invoice` |
+| **Invoice Payments** | `list_invoice_payments` `record_invoice_payment` |
 | **Users** | `get_me` `get_user` `list_users` `list_my_project_assignments` `list_user_project_assignments` |
 | **Expenses** | `list_expenses` `get_expense` `create_expense` `update_expense` |
 | **Expense Categories** | `list_expense_categories` `get_expense_category` `create_expense_category` `update_expense_category` |
@@ -34,7 +37,7 @@ This makes the server safe for deployment to client teams without risk of accide
 | **Expense Reports** | `expense_report_by_clients` `expense_report_by_projects` `expense_report_by_categories` `expense_report_by_team` |
 | **Other Reports** | `project_budget_report` `uninvoiced_report` |
 
-> Note: `send_invoice` emails the invoice to the client and moves a draft to `open` state, so it is flagged as a destructive action and Claude will confirm before sending.
+> Note: `send_invoice` emails the invoice to the client and moves a draft to `open` state. `record_invoice_payment` updates the invoice's outstanding balance (and marks it paid when fully settled). Both are flagged as destructive actions so Claude confirms before acting. Recording a payment only updates Harvest bookkeeping — it never moves money or charges a client.
 
 ## Quick Install (Claude Desktop Extension)
 
@@ -91,6 +94,13 @@ Generate and send invoices conversationally. Examples:
 > "Send invoice #1002 to billing@client.com."
 
 Invoices are created in `draft` state. Nothing is emailed until you explicitly call `send_invoice`, and Claude confirms before sending.
+
+To record a payment once a client pays:
+> "Record a $2,500 payment on invoice #1002, paid by check today."
+
+> "Show me all payments recorded against invoice #1002."
+
+Recording a payment updates the invoice balance and marks it paid when fully settled. It only updates Harvest's records — it does not move money or charge the client.
 
 ## Upstream
 

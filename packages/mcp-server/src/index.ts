@@ -31,7 +31,7 @@ const client = new HarvestClient(accessToken, accountId);
 
 const server = new McpServer({
   name: "harvest",
-  version: "1.2.0",
+  version: "1.3.0",
 });
 
 registerTimeEntryTools(server, client);
