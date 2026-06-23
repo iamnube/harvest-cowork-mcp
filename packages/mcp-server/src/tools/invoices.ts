@@ -89,6 +89,79 @@ export function registerInvoiceTools(server: McpServer, client: HarvestClient) {
   );
 
   server.registerTool(
+    "create_invoice_from_time",
+    {
+      title: "Create Invoice from Tracked Time",
+      description:
+        "Create a draft invoice that automatically pulls in unbilled tracked time and expenses for one or more projects. Harvest gathers all uninvoiced time/expenses for the given project_ids and turns them into invoice line items. Use the summary types to control how line items are grouped. The invoice is created as a draft and is not sent.",
+      inputSchema: z.object({
+        client_id: z.number().describe("The ID of the client this invoice belongs to"),
+        project_ids: z
+          .array(z.number())
+          .describe("One or more project IDs to pull unbilled time/expenses from"),
+        time_summary_type: z
+          .enum(["project", "task", "people", "detailed"])
+          .default("project")
+          .describe("How to group time line items: by project, task, people, or one detailed line per entry"),
+        include_expenses: z
+          .boolean()
+          .default(true)
+          .describe("Whether to also pull unbilled expenses onto the invoice"),
+        expense_summary_type: z
+          .enum(["project", "category", "detailed"])
+          .default("category")
+          .describe("How to group expense line items (only used if include_expenses is true)"),
+        from: z.string().optional().describe("Only include time/expenses on or after this date (YYYY-MM-DD)"),
+        to: z.string().optional().describe("Only include time/expenses on or before this date (YYYY-MM-DD)"),
+        subject: z.string().optional().describe("The invoice subject"),
+        notes: z.string().optional().describe("Additional notes on the invoice"),
+        issue_date: z.string().optional().describe("Issue date (YYYY-MM-DD, defaults to today)"),
+        due_date: z.string().optional().describe("Due date (YYYY-MM-DD)"),
+        payment_term: z
+          .enum(["upon receipt", "net 15", "net 30", "net 45", "net 60", "custom"])
+          .optional()
+          .describe("Payment timeframe"),
+        attach_expense_receipts: z
+          .boolean()
+          .default(false)
+          .describe("Attach expense receipts to the invoice (only applies when expenses are included)"),
+      }),
+    },
+    async (args) => {
+      const payload: Record<string, unknown> = {
+        client_id: args.client_id,
+        subject: args.subject,
+        notes: args.notes,
+        issue_date: args.issue_date,
+        due_date: args.due_date,
+        payment_term: args.payment_term,
+        line_items_import: {
+          project_ids: args.project_ids,
+          time: {
+            summary_type: args.time_summary_type,
+            ...(args.from ? { from: args.from } : {}),
+            ...(args.to ? { to: args.to } : {}),
+          },
+          ...(args.include_expenses
+            ? {
+                expenses: {
+                  summary_type: args.expense_summary_type,
+                  ...(args.from ? { from: args.from } : {}),
+                  ...(args.to ? { to: args.to } : {}),
+                  attach_receipt: args.attach_expense_receipts,
+                },
+              }
+            : {}),
+        },
+      };
+      const result = await client.createInvoiceFromTime(payload as never);
+      return {
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+      };
+    },
+  );
+
+  server.registerTool(
     "update_invoice",
     {
       title: "Update Invoice",

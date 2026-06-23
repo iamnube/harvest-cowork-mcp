@@ -61,6 +61,7 @@ import type {
   ListInvoicePaymentsParams,
   InvoicePayment,
   CreateInvoicePaymentParams,
+  CreateInvoiceFromTimeParams,
 } from "./types.js";
 
 const BASE_URL = "https://api.harvestapp.com";
@@ -377,6 +378,10 @@ export class HarvestClient {
   }
 
   async createInvoice(data: CreateInvoiceParams): Promise<Invoice> {
+    return this.request<Invoice>("POST", "/v2/invoices", undefined, data as unknown as Record<string, unknown>);
+  }
+
+  async createInvoiceFromTime(data: CreateInvoiceFromTimeParams): Promise<Invoice> {
     return this.request<Invoice>("POST", "/v2/invoices", undefined, data as unknown as Record<string, unknown>);
   }
 

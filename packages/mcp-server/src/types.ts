@@ -370,6 +370,7 @@ export interface CreateTimeEntryParams {
   started_time?: string;
   ended_time?: string;
   notes?: string;
+  billable?: boolean;
 }
 
 export interface UpdateTimeEntryParams {
@@ -380,6 +381,7 @@ export interface UpdateTimeEntryParams {
   started_time?: string;
   ended_time?: string;
   notes?: string;
+  billable?: boolean;
 }
 
 export interface CreateProjectParams {
@@ -521,6 +523,7 @@ export interface ListTimeEntriesParams {
   from?: string;
   to?: string;
   approval_status?: "unsubmitted" | "submitted" | "approved";
+  is_billed?: boolean;
   page?: number;
   per_page?: number;
 }
@@ -760,4 +763,35 @@ export interface CreateInvoicePaymentParams {
   paid_at?: string;
   paid_date?: string;
   notes?: string;
+}
+
+// --- Invoice from tracked time/expenses (line_items_import) ---
+
+export interface CreateInvoiceFromTimeParams {
+  client_id: number;
+  subject?: string;
+  notes?: string;
+  number?: string;
+  purchase_order?: string;
+  tax?: number;
+  tax2?: number;
+  discount?: number;
+  currency?: string;
+  issue_date?: string;
+  due_date?: string;
+  payment_term?: string;
+  line_items_import: {
+    project_ids: number[];
+    time?: {
+      summary_type: "project" | "task" | "people" | "detailed";
+      from?: string;
+      to?: string;
+    };
+    expenses?: {
+      summary_type: "project" | "category" | "detailed";
+      from?: string;
+      to?: string;
+      attach_receipt?: boolean;
+    };
+  };
 }

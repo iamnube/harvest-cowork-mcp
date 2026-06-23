@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "harvest-mcp",
   "display_name": "Harvest Time Tracking (IAMNUBE)",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Harvest API integration — time entries, projects, tasks, clients, expenses, invoices, team assignments, and reports. Delete operations disabled for safety.",
   "author": {
     "name": "Mikko Kämäräinen"
@@ -99,6 +99,7 @@
     { "name": "list_invoices", "description": "List invoices, filterable by client, project, state, or date" },
     { "name": "get_invoice", "description": "Get a specific invoice with its line items" },
     { "name": "create_invoice", "description": "Create a new draft invoice for a client" },
+    { "name": "create_invoice_from_time", "description": "Create a draft invoice from unbilled tracked time and expenses by project" },
     { "name": "update_invoice", "description": "Update an existing invoice and its line items" },
     { "name": "send_invoice", "description": "Email an invoice to recipients" },
     { "name": "list_invoice_payments", "description": "List payments recorded against an invoice" },

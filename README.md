@@ -19,15 +19,15 @@ This makes the server safe for deployment to client teams without risk of accide
 
 **Invoice & payment support added (v1.3.0):** full invoice management — list, get, create, update, send — plus payment recording (list and record received payments), all minus delete, consistent with the fork's safety policy.
 
-## Available Tools (54)
+## Available Tools (55)
 
 | Area | Tools |
 |---|---|
-| **Time Entries** | `list_time_entries` `get_time_entry` `create_time_entry` `update_time_entry` `restart_timer` `stop_timer` |
+| **Time Entries** | `list_time_entries` (filter by `is_billed`) `get_time_entry` `create_time_entry` (`billable` flag) `update_time_entry` `restart_timer` `stop_timer` |
 | **Projects** | `list_projects` `get_project` `create_project` `update_project` `list_project_task_assignments` |
 | **Tasks** | `list_tasks` `get_task` `create_task` `update_task` |
 | **Clients** | `list_clients` `get_client` `create_client` `update_client` |
-| **Invoices** | `list_invoices` `get_invoice` `create_invoice` `update_invoice` `send_invoice` |
+| **Invoices** | `list_invoices` `get_invoice` `create_invoice` `create_invoice_from_time` `update_invoice` `send_invoice` |
 | **Invoice Payments** | `list_invoice_payments` `record_invoice_payment` |
 | **Users** | `get_me` `get_user` `list_users` `list_my_project_assignments` `list_user_project_assignments` |
 | **Expenses** | `list_expenses` `get_expense` `create_expense` `update_expense` |
@@ -94,6 +94,11 @@ Generate and send invoices conversationally. Examples:
 > "Send invoice #1002 to billing@client.com."
 
 Invoices are created in `draft` state. Nothing is emailed until you explicitly call `send_invoice`, and Claude confirms before sending.
+
+To bill a client for all the unbilled work logged against their projects:
+> "Create an invoice for [client] from all unbilled time and expenses on project 12345, grouped by task."
+
+This uses `create_invoice_from_time`, which pulls every uninvoiced time entry and expense for the given projects into a draft invoice automatically — no manual line items needed. Add a `from`/`to` date range to bill only a specific period.
 
 To record a payment once a client pays:
 > "Record a $2,500 payment on invoice #1002, paid by check today."

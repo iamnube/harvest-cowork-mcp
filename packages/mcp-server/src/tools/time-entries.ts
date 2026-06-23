@@ -20,6 +20,10 @@ export function registerTimeEntryTools(server: McpServer, client: HarvestClient)
           .enum(["unsubmitted", "submitted", "approved"])
           .optional()
           .describe("Filter by approval status"),
+        is_billed: z
+          .boolean()
+          .optional()
+          .describe("Filter by billed status. Pass false to find unbilled time (not yet pulled onto an invoice), true for already-invoiced time."),
         page: z.number().optional().describe("Page number for pagination"),
         per_page: z.number().optional().describe("Results per page (max 2000)"),
       }),
@@ -69,6 +73,10 @@ export function registerTimeEntryTools(server: McpServer, client: HarvestClient)
         started_time: z.string().optional().describe("Start time (e.g. '8:00am' or '08:00')"),
         ended_time: z.string().optional().describe("End time (e.g. '5:00pm' or '17:00')"),
         notes: z.string().optional().describe("Notes for the time entry"),
+        billable: z
+          .boolean()
+          .optional()
+          .describe("Whether this time entry is billable. Defaults to the project/task setting if omitted."),
       }),
     },
     async (args) => {
@@ -93,6 +101,7 @@ export function registerTimeEntryTools(server: McpServer, client: HarvestClient)
         started_time: z.string().optional().describe("New start time"),
         ended_time: z.string().optional().describe("New end time"),
         notes: z.string().optional().describe("New notes"),
+        billable: z.boolean().optional().describe("Whether this time entry is billable"),
       }),
     },
     async (args) => {
